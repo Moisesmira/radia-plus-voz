@@ -3,10 +3,13 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 # ---------------------------
-# Mensaje de comprobación
+# Configuración de la página
 # ---------------------------
-st.write("✅ RADIA + VOZ cargado correctamente.")
-
+st.set_page_config(
+    page_title="RADIA + VOZ – Asistente en Radioterapia",
+    page_icon=":loud_sound:",
+    layout="centered",
+)
 
 # ---------------------------
 # Función IA (importa openai dentro)
@@ -94,14 +97,8 @@ def tts_button(label: str, text: str):
 
 
 # ---------------------------
-# Configuración de la página
+# Cabecera de la app
 # ---------------------------
-st.set_page_config(
-    page_title="RADIA + VOZ – Asistente en Radioterapia",
-    page_icon=":loud_sound:",
-    layout="centered",
-)
-
 st.title("RADIA + VOZ – Asistente virtual en radioterapia")
 st.subheader("Servicio de Oncología Radioterápica · Hospital Universitari Arnau de Vilanova")
 st.markdown("---")
