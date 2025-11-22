@@ -1,24 +1,30 @@
 import os
 import streamlit as st
-import openai
 import streamlit.components.v1 as components
 
 # ---------------------------
-# Configuración OpenAI
+# Mensaje de comprobación
 # ---------------------------
-# IMPORTANTE:
-# Define en los secretos / variables de entorno:
-# OPENAI_API_KEY = "tu_clave"
-openai.api_key = os.getenv("OPENAI_API_KEY")
+st.write("✅ RADIA + VOZ cargado correctamente.")
 
 
+# ---------------------------
+# Función IA (importa openai dentro)
+# ---------------------------
 def get_detailed_response(question: str) -> str:
     """
     Devuelve una explicación ampliada usando IA a partir de la pregunta seleccionada.
-    Usa el cliente clásico de openai (requiere openai==0.28 en requirements.txt).
+    Intenta usar openai==0.28 (ChatCompletion). Si hay error, devuelve un mensaje amigable.
     """
-    if not openai.api_key:
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
         return "No se ha encontrado la clave de OpenAI. Revisa la configuración de OPENAI_API_KEY."
+
+    try:
+        import openai
+        openai.api_key = api_key
+    except Exception as e:
+        return f"No se ha podido cargar la librería de OpenAI. Revisa requirements.txt. Detalle: {e}"
 
     try:
         response = openai.ChatCompletion.create(
@@ -49,7 +55,7 @@ def get_detailed_response(question: str) -> str:
 
 
 # ---------------------------
-# Función para botón de voz (usa el navegador)
+# Botón de voz (usa el navegador)
 # ---------------------------
 def tts_button(label: str, text: str):
     """
